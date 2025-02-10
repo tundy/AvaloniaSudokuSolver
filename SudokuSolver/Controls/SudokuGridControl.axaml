@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="576" d:DesignHeight="576"
+             x:Class="SudokuSolver.SudokuGridControl">
+  <Border BorderBrush="Black" BorderThickness="1" Padding="5" Margin="1">
+    <UniformGrid Name="grid" Rows="3" Columns="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+      <!-- SudokuCellControls will be added here dynamically -->
+    </UniformGrid>
+  </Border>
+</UserControl>

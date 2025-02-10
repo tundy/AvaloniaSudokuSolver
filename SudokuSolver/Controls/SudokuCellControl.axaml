@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SudokuSolver.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="64" d:DesignHeight="64"
+             x:Class="SudokuSolver.SudokuCellControl"
+             x:DataType="vm:SudokuCellViewModel"
+             MinHeight="32" MinWidth="32">
+  <Border BorderBrush="Black" BorderThickness="1" Padding="5" Margin="1">
+    <Border.Background>
+      <MultiBinding Converter="{StaticResource HighLightConverter}">
+        <Binding Path="Highlight" />
+        <Binding Path="AvailableDigits" />
+      </MultiBinding>
+    </Border.Background>
+    <Grid>
+      <!-- Large Number (if set) -->
+      <TextBlock Text="{Binding Value}"
+                 FontSize="24"
+                 Foreground="{Binding IsFixed, Converter={StaticResource FixedToColorConverter}}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 IsVisible="{Binding Value.HasValue}" />
+
+      <!-- Small Candidates -->
+      <UniformGrid IsVisible="{Binding !Value.HasValue}"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center">
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="1" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=1}" />
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="2" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Center" VerticalAlignment="Bottom" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=2}" />
+        <TextBlock Grid.Column="2" Grid.Row="0" Text="3" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Left" VerticalAlignment="Bottom" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=3}" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="4" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=4}" />
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="5" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=5}" />
+        <TextBlock Grid.Column="2" Grid.Row="1" Text="6" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=6}" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="7" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=7}" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="8" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=8}" />
+        <TextBlock Grid.Column="2" Grid.Row="2" Text="9" FontSize="10" Foreground="Gray"
+                 HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{Binding AvailableDigits, Converter={StaticResource AvailableDigitsConverter}, ConverterParameter=9}" />
+      </UniformGrid>
+    </Grid>
+  </Border>
+</UserControl>

@@ -1,0 +1,21 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SudokuSolver.App"
+             xmlns:local="using:SudokuSolver"
+             xmlns:converters="using:SudokuSolver.Converters"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+  <Application.DataTemplates>
+      <local:ViewLocator/>
+  </Application.DataTemplates>
+  <Application.Resources>
+    <ResourceDictionary>
+      <converters:FixedToColorConverter x:Key="FixedToColorConverter"/>
+      <converters:AvailableDigitsConverter x:Key="AvailableDigitsConverter"/>
+      <converters:HighLightConverter x:Key="HighLightConverter"/>
+    </ResourceDictionary>
+  </Application.Resources>
+  <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+</Application>
