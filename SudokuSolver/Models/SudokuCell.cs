@@ -15,7 +15,7 @@ namespace SudokuSolver.Models
         private int? _value;
         private bool _isFixed;
         private bool _highlight;
-        private HashSet<int> _availableDigits = new(Enumerable.Range(1, 9));
+        private HashSet<int> _availableDigits = [.. Enumerable.Range(1, 9)];
 
         /// <summary>
         /// Gets or sets a value indicating whether the cell is highlighted.
@@ -203,7 +203,7 @@ namespace SudokuSolver.Models
         /// </summary>
         public void ResetAvailableDigits()
         {
-            AvailableDigits = new HashSet<int>(Enumerable.Range(1, 9));
+            AvailableDigits = [.. Enumerable.Range(1, 9)];
         }
 
         /// <summary>
