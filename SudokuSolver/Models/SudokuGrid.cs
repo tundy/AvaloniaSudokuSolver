@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using SudokuSolver.Extensions;
 using System;
 using System.Collections;
