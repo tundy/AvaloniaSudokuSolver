@@ -24,7 +24,7 @@ namespace SudokuSolver.Views
             var uniformGrid = this.FindControl<Grid>("grid")!;
             uniformGrid.Children.Add(_sudokuGridControl);
             DownloadNewSudoku().ConfigureAwait(false);
-            _timer = new(UpdateInterval, DispatcherPriority.Normal, async (_, _) => await UpdateCellsAsync());
+            _timer = new(UpdateInterval, DispatcherPriority.Normal, async (_, _) => await DoOneIteration());
             _timer.Start();
         }
 
@@ -35,10 +35,10 @@ namespace SudokuSolver.Views
             Guesses = [];
         }
 
-        private readonly TimeSpan WaitDelay = TimeSpan.FromSeconds(2);
-        private readonly TimeSpan UpdateInterval = TimeSpan.FromMilliseconds(1);
+        private static readonly TimeSpan WaitDelay = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan UpdateInterval = TimeSpan.FromMilliseconds(1);
+        private const int IterationsPerUpdate = 2;
         private readonly DispatcherTimer _timer;
-
         private string LastSudoku = string.Empty;
         private Stack<string> Guesses = null!;
 
@@ -59,6 +59,14 @@ namespace SudokuSolver.Views
             {
                 await Task.Delay(WaitDelay);
                 await DownloadNewSudoku();
+            }
+        }
+
+        private async Task DoOneIteration()
+        {
+            for(var i = 0; i < IterationsPerUpdate; i++)
+            {
+                await UpdateCellsAsync();
             }
         }
 
