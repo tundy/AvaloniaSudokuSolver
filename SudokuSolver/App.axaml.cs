@@ -1,12 +1,11 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SudokuSolver.ViewModels;
 using SudokuSolver.Views;
 
 namespace SudokuSolver
 {
-    public partial class App : Application
+    public class App : Application
     {
         public override void Initialize()
         {
@@ -17,10 +16,7 @@ namespace SudokuSolver
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
+                desktop.MainWindow = new MainWindow();
             }
             base.OnFrameworkInitializationCompleted();
         }
