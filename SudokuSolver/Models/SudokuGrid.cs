@@ -13,10 +13,28 @@ namespace SudokuSolver.Models
     [Newtonsoft.Json.JsonObject]
     public class SudokuGrid : IReadOnlyList<SudokuCell>
     {
+        /// <summary>
+        /// Serializes the Sudoku grid to a JSON string.
+        /// </summary>
+        /// <returns>The JSON string representing the Sudoku grid.</returns>
         public string JsonSerialize() => JsonSerialize(this);
+        /// <summary>
+        /// Serializes the Sudoku grid to a JSON string.
+        /// </summary>
+        /// <param name="grid">The Sudoku grid to serialize.</param>
+        /// <returns>The JSON string representing the Sudoku grid.</returns>
         public static string JsonSerialize(SudokuGrid grid) => Newtonsoft.Json.JsonConvert.SerializeObject(grid);
+        /// <summary>
+        /// Deserializes a JSON string to a Sudoku grid.
+        /// </summary>
+        /// <param name="json">The JSON string representing the Sudoku grid.</param>
+        /// <returns>The deserialized Sudoku grid.</returns>
         public static SudokuGrid? JsonDeserialize(string json) => Newtonsoft.Json.JsonConvert.DeserializeObject<SudokuGrid>(json);
-
+        /// <summary>
+        /// Loads the Sudoku grid from a string representation of the cells.
+        /// </summary>
+        /// <param name="cells">The string representation of the cells.</param>
+        /// <exception cref="ArgumentException">Thrown when the input string contains an invalid character.</exception>
         public void Load(ReadOnlySpan<char> cells)
         {
             if (cells.Length != 81)
@@ -38,13 +56,14 @@ namespace SudokuSolver.Models
                 }
             }
         }
-
+        /// <summary>
+        /// Loads the Sudoku grid from a string representation of the cells.
+        /// </summary>
+        /// <param name="cells">The string representation of the cells.</param>
+        /// <exception cref="ArgumentException">Thrown when the input string contains an invalid character.</exception>
         public void Load(string cells)
         {
-            if(string.IsNullOrWhiteSpace(cells))
-            {
-                throw new ArgumentException("Invalid input", nameof(cells));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(cells, nameof(cells));
             Load(cells.AsSpan());
         }
 
@@ -235,6 +254,9 @@ namespace SudokuSolver.Models
                 }
             }
         }
+        /// <summary>
+        /// Applies the X-Wing technique to the rows of the Sudoku grid, eliminating candidates from other cells based on the identified X-Wing pattern.
+        /// </summary>
         public void XWingRows()
         {
             var pairs = Rows.Permutations(2);

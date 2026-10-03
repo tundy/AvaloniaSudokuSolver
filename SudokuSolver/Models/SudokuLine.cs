@@ -72,18 +72,12 @@ namespace SudokuSolver.Models
                 if(lineType == LineType.Row)
                 {
                     Cells[i] = grid.GetCell(index, i);
-                    if(Cells[i] is not null)
-                    {
-                        Cells[i].Row = this;
-                    }
+                    Cells[i]?.Row = this;
                 }
                 else
                 {
                     Cells[i] = grid.GetCell(i, index);
-                    if (Cells[i] is not null)
-                    {
-                        Cells[i].Column = this;
-                    }
+                    Cells[i]?.Column = this;
                 }
             }
         }

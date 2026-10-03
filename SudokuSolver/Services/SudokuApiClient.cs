@@ -8,7 +8,10 @@ namespace SudokuSolver.Services;
 public static class SudokuApiClient
 {
     private static readonly HttpClient _httpClient = new();
-
+    /// <summary>
+    /// Downloads a new Sudoku puzzle from the Dosuku API and converts it to a SudokuGrid object.
+    /// </summary>
+    /// <returns>The downloaded Sudoku grid.</returns>
     public static async Task<SudokuGrid>  DownloadSudokuAsync()
     {
         const string url = "https://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:1){grids{difficulty,value}}}";

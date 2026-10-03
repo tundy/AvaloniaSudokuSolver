@@ -8,6 +8,14 @@ namespace SudokuSolver.Converters
 {
     public class HighLightConverter : IValueConverter, IMultiValueConverter
     {
+        /// <summary>
+        /// Converts a boolean value to a brush.
+        /// </summary>
+        /// <param name="value">The boolean value to convert.</param>
+        /// <param name="targetType">The type of the target.</param>
+        /// <param name="parameter">The converter parameter.</param>
+        /// <param name="culture">The culture to use.</param>
+        /// <returns>The converted brush.</returns>
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (targetType != typeof(IBrush))
@@ -23,7 +31,14 @@ namespace SudokuSolver.Converters
                 return new Avalonia.Data.BindingNotification(new InvalidOperationException("Input value is not a bool."), Avalonia.Data.BindingErrorType.DataValidationError, Brushes.Black);
             }
         }
-
+        /// <summary>
+        /// Converts multiple values to a brush based on the provided boolean and list of integers.
+        /// </summary>
+        /// <param name="values">The values to convert.</param>
+        /// <param name="targetType">The type of the target.</param>
+        /// <param name="parameter">The converter parameter.</param>
+        /// <param name="culture">The culture to use.</param>
+        /// <returns>The converted brush.</returns>
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
             // Check if we have both required values
@@ -49,7 +64,14 @@ namespace SudokuSolver.Converters
             var b = (byte)(Brushes.LightYellow.Color.B + ((Brushes.White.Color.B - Brushes.LightYellow.Color.B) * factor));
             return new SolidColorBrush(new Color(255, r, g, b));
         }
-
+        /// <summary>
+        /// Converts back from a brush to a boolean value. This method is not implemented and will throw a NotImplementedException if called.
+        /// </summary>
+        /// <param name="value">The brush to convert back.</param>
+        /// <param name="targetType">The type of the target.</param>
+        /// <param name="parameter">The converter parameter.</param>
+        /// <param name="culture">The culture to use.</param>
+        /// <returns>The converted boolean value.</returns>
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
             => new Avalonia.Data.BindingNotification(new NotImplementedException(), Avalonia.Data.BindingErrorType.Error);
     }

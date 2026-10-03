@@ -12,22 +12,18 @@ namespace SudokuSolver.Models
     /// </summary>
     public class SudokuCell : INotifyPropertyChanged
     {
-        private int? _value;
-        private bool _isFixed;
-        private bool _highlight;
-        private HashSet<int> _availableDigits = [.. Enumerable.Range(1, 9)];
 
         /// <summary>
         /// Gets or sets a value indicating whether the cell is highlighted.
         /// </summary>
         public bool Highlight
         {
-            get => _highlight;
+            get;
             set
             {
-                if (_highlight != value)
+                if (field != value)
                 {
-                    _highlight = value;
+                    field = value;
                     OnPropertyChanged(nameof(Highlight));
                 }
             }
@@ -38,12 +34,12 @@ namespace SudokuSolver.Models
         /// </summary>
         public int? Value
         {
-            get => _value;
+            get;
             set
             {
-                if (_value != value)
+                if (field != value)
                 {
-                    _value = value;
+                    field = value;
                     if (value.HasValue)
                     {
                         AvailableDigits = [value.Value];
@@ -58,12 +54,12 @@ namespace SudokuSolver.Models
         /// </summary>
         public bool IsFixed
         {
-            get => _isFixed;
+            get;
             set
             {
-                if (_isFixed != value)
+                if (field != value)
                 {
-                    _isFixed = value;
+                    field = value;
                     OnPropertyChanged(nameof(IsFixed));
                 }
             }
@@ -119,16 +115,16 @@ namespace SudokuSolver.Models
         /// </summary>
         public HashSet<int> AvailableDigits
         {
-            get => _availableDigits;
+            get;
             private set
             {
-                if (_availableDigits != value)
+                if (field != value)
                 {
-                    _availableDigits = value;
+                    field = value;
                     OnPropertyChanged(nameof(AvailableDigits));
                 }
             }
-        }
+        } = [.. Enumerable.Range(1, 9)];
 
         /// <summary>
         /// The available digits for this cell, that are available only for this box's row.
@@ -166,7 +162,7 @@ namespace SudokuSolver.Models
         [System.Text.Json.Serialization.JsonConstructor]
         public SudokuCell(int rowIndex, int columnIndex, HashSet<int> availableDigits, ImmutableHashSet<int> availableDigitsForRowInBox, ImmutableHashSet<int> availableDigitsForColumnInBox)
         {
-            _availableDigits = availableDigits ?? throw new ArgumentNullException(nameof(availableDigits));
+            AvailableDigits = availableDigits ?? throw new ArgumentNullException(nameof(availableDigits));
             AvailableDigitsForRowInBox = availableDigitsForRowInBox ?? throw new ArgumentNullException(nameof(availableDigitsForRowInBox));
             AvailableDigitsForColumnInBox = availableDigitsForColumnInBox ?? throw new ArgumentNullException(nameof(availableDigitsForColumnInBox));
             Box = null!;
@@ -186,15 +182,9 @@ namespace SudokuSolver.Models
             if (Grid is not null)
             {
                 Column = Grid.GetLine(LineType.Column, ColumnIndex);
-                if (Column is not null)
-                {
-                    Column.Cells[ColumnIndex] = this;
-                }
+                Column?.Cells[ColumnIndex] = this;
                 Row = Grid.GetLine(LineType.Row, RowIndex);
-                if (Row is not null)
-                {
-                    Row.Cells[RowIndex] = this;
-                }
+                Row?.Cells[RowIndex] = this;
             }
         }
 
